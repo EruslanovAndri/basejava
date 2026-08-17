@@ -10,13 +10,18 @@ public class ArrayStorage {
         Arrays.fill(storage, null);
     }
 
-    void save(Resume r) {
+    void save(Resume resume) {
         int resumePosition = size();
-        storage[resumePosition] = r;
+        storage[resumePosition] = resume;
     }
 
     Resume get(String uuid) {
-        return storage[0];
+        for (int i = 0; i < size(); i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                return storage[i];
+            }
+        }
+        return null;
     }
 
     void delete(String uuid) {
