@@ -1,8 +1,9 @@
 .idea
 out/
+lib/
+log/
 *.iml
 *.class
-log/
 .DS_Store
 
 
