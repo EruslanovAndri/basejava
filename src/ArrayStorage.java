@@ -34,7 +34,6 @@ public class ArrayStorage {
                 break;
             }
         }
-        System.out.println(Arrays.toString(storage));
     }
 
     /**
