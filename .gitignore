@@ -5,6 +5,7 @@ log/
 *.iml
 *.class
 .DS_Store
+hints.md
 
 
 
