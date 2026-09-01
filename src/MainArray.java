@@ -46,8 +46,12 @@ public class MainArray {
                     }
                     break;
                 case "delete":
-                    ARRAY_STORAGE.delete(uuid);
-                    printAll();
+                    try {
+                        ARRAY_STORAGE.delete(uuid);
+                        printAll();
+                    } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case "get":
                     try {
