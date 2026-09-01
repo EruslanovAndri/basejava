@@ -18,7 +18,7 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         if (isPresentResume(resume.getUuid())) {
-            int i = getIndexByUuid(resume.getUuid());
+            int i = findResumeIndex(resume.getUuid());
             storage[i] = resume;
         } else {
             throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
@@ -47,7 +47,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int resumeIndex = getIndexByUuid(uuid);
+        int resumeIndex = findResumeIndex(uuid);
         if (!isPresentResume(uuid) && resumeIndex == -1) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
         }
@@ -55,7 +55,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int resumeIndex = getIndexByUuid(uuid);
+        int resumeIndex = findResumeIndex(uuid);
         if (!isPresentResume(uuid) && resumeIndex == -1) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
                     "нет в хранилище.");
@@ -73,7 +73,7 @@ public class ArrayStorage {
         return size;
     }
 
-    private int getIndexByUuid(String uuid) {
+    private int findResumeIndex(String uuid) {
         int index = -1;
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
