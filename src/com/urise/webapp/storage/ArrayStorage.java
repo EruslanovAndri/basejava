@@ -33,7 +33,8 @@ public class ArrayStorage {
         }
 
         boolean isDuplicate = false;
-        if (size != 0 && findResumeIndex(resume.getUuid()) != -1) {
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        if (size != 0 && resumeIndex != -1) {
             isDuplicate = true;
         }
 
