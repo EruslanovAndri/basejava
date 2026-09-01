@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  * Array based storage for Resumes.
@@ -37,12 +38,17 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return storage[i];
+        int resumeIndex = 0;
+        if (!isPresentResume(uuid)) {
+            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (uuid.equals(storage[i].getUuid())) {
+                    resumeIndex = i;
+                }
             }
         }
-        return null;
+        return storage[resumeIndex];
     }
 
     public void delete(String uuid) {
@@ -64,5 +70,14 @@ public class ArrayStorage {
 
     public int size() {
         return size;
+    }
+
+    private boolean isPresentResume(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
