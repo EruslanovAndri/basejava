@@ -17,9 +17,9 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (isPresentResume(resume.getUuid())) {
-            int i = findResumeIndex(resume.getUuid());
-            storage[i] = resume;
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        if (resumeIndex != -1) {
+            storage[resumeIndex] = resume;
         } else {
             throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
                     " ) нет в хранилище и его не возможно обновить.");
@@ -48,7 +48,7 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
-        if (!isPresentResume(uuid) && resumeIndex == -1) {
+        if (resumeIndex == -1) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
         }
         return storage[resumeIndex];
@@ -56,7 +56,7 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
-        if (!isPresentResume(uuid) && resumeIndex == -1) {
+        if (resumeIndex == -1) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
                     "нет в хранилище.");
         } else {
@@ -82,14 +82,5 @@ public class ArrayStorage {
             }
         }
         return index;
-    }
-
-    private boolean isPresentResume(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return true;
-            }
-        }
-        return false;
     }
 }
