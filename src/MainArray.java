@@ -18,7 +18,7 @@ public class MainArray {
         Resume resume;
         while (true) {
             System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid" +
-                    " | get uuid | clear | exit): ");
+                    " | get uuid | update uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -56,6 +56,16 @@ public class MainArray {
                 case "get":
                     try {
                         System.out.println(ARRAY_STORAGE.get(uuid));
+                    } catch (NoSuchElementException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case "update":
+                    resume = new Resume();
+                    resume.setUuid(uuid);
+                    try {
+                        ARRAY_STORAGE.update(resume);
+                        printAll();
                     } catch (NoSuchElementException e) {
                         System.out.println(e.getMessage());
                     }
