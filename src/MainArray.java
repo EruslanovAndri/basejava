@@ -37,8 +37,12 @@ public class MainArray {
                 case "save":
                     resume = new Resume();
                     resume.setUuid(uuid);
-                    ARRAY_STORAGE.save(resume);
-                    printAll();
+                    try {
+                        ARRAY_STORAGE.save(resume);
+                        printAll();
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case "delete":
                     ARRAY_STORAGE.delete(uuid);
