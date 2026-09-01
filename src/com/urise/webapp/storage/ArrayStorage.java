@@ -17,6 +17,16 @@ public class ArrayStorage {
         size = 0;
     }
 
+    public void update(Resume resume) {
+        if (isPresentResume(resume.getUuid())) {
+            int i = getIndexByUuid(resume.getUuid());
+            storage[i] = resume;
+        } else {
+            throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
+                    " ) нет в хранилище и его не возможно обновить.");
+        }
+    }
+
     public void save(Resume resume) {
         if (size == storage.length) {
             throw new ArrayIndexOutOfBoundsException("В хранилище нет свободного места, резюме с номером (" +
