@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -34,11 +33,10 @@ public class ArrayStorage {
         }
 
         boolean isDuplicate = false;
-        for (int i = 0; i < size; i++) {
-            if (size != 0 && storage[i].getUuid().equals(resume.getUuid())) {
-                isDuplicate = true;
-            }
+        if (size != 0 && findResumeIndex(resume.getUuid()) != -1) {
+            isDuplicate = true;
         }
+
         if (!isDuplicate) {
             storage[size] = resume;
             size++;
