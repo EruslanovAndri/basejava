@@ -17,8 +17,23 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        storage[size] = resume;
-        size++;
+        if (size == storage.length) {
+            throw new ArrayIndexOutOfBoundsException("В хранилище нет свободного места, резюме с номером (" +
+                    resume.getUuid() + ") не может быть добавлено.");
+        }
+
+        boolean isDuplicate = false;
+        for (int i = 0; i < size; i++) {
+            if (size != 0 && storage[i].getUuid().equals(resume.getUuid())) {
+                isDuplicate = true;
+            }
+        }
+        if (!isDuplicate) {
+            storage[size] = resume;
+            size++;
+        } else {
+            System.out.println("Резюме с номером ( " + resume.getUuid() + " ) уже существует в хранилище.");
+        }
     }
 
     public Resume get(String uuid) {
