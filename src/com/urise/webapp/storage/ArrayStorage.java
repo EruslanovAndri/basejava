@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -38,25 +37,31 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int resumeIndex = 0;
-        if (!isPresentResume(uuid)) {
+        int resumeIndex = getIndexByUuid(uuid);
+        if (!isPresentResume(uuid) && resumeIndex == -1) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (uuid.equals(storage[i].getUuid())) {
-                    resumeIndex = i;
-                }
-            }
         }
+//        } else {
+//            for (int i = 0; i < size; i++) {
+//                if (uuid.equals(storage[i].getUuid())) {
+//                    resumeIndex = i;
+//                }
+//            }
+//        }
         return storage[resumeIndex];
     }
 
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                System.arraycopy(storage, i + 1, storage, i, size - i - 1);
-                storage[--size] = null;
-                break;
+        if (!isPresentResume(uuid)) {
+            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
+                    "нет в хранилище.");
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (uuid.equals(storage[i].getUuid())) {
+                    System.arraycopy(storage, i + 1, storage, i, size - i - 1);
+                    storage[--size] = null;
+                    break;
+                }
             }
         }
     }
@@ -70,6 +75,16 @@ public class ArrayStorage {
 
     public int size() {
         return size;
+    }
+
+    private int getIndexByUuid(String uuid) {
+        int index = -1;
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                index = i;
+            }
+        }
+        return index;
     }
 
     private boolean isPresentResume(String uuid) {
