@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
  * Array based storage for Resumes.
  */
 public class ArrayStorage {
-    public static final int STORAGE_LIMIT = 10000;
+    private static final int STORAGE_LIMIT = 10000;
     private int size;
     public Resume[] storage = new Resume[STORAGE_LIMIT];
 
@@ -28,7 +28,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size == storage.length) {
+        if (size == STORAGE_LIMIT) {
             throw new ArrayIndexOutOfBoundsException("В хранилище нет свободного места, резюме с номером (" +
                     resume.getUuid() + ") не может быть добавлено.");
         }
