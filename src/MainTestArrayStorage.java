@@ -1,6 +1,5 @@
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
-
 import java.util.NoSuchElementException;
 
 /**
@@ -28,7 +27,6 @@ public class MainTestArrayStorage {
         } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
         }
-
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
