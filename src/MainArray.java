@@ -1,3 +1,4 @@
+import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
@@ -41,7 +42,7 @@ public class MainArray {
                     try {
                         ARRAY_STORAGE.save(resume);
                         printAll();
-                    } catch (NoFreeSpaceException e) {
+                    } catch (NoFreeSpaceException | DuplicateException e) {
                         System.out.println(e.getMessage());
                     }
                     break;

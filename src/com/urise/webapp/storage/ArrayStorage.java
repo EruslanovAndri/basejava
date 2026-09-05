@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.NoSuchElementException;
  * Array based storage for Resumes.
  */
 public class ArrayStorage {
-    private static final int STORAGE_LIMIT = 1;
+    private static final int STORAGE_LIMIT = 10000;
     private int size;
     public Resume[] storage = new Resume[STORAGE_LIMIT];
 
@@ -34,7 +35,7 @@ public class ArrayStorage {
         }
         int resumeIndex = findResumeIndex(resume.getUuid());
         if (resumeIndex != -1) {
-            throw new ArrayIndexOutOfBoundsException("Резюме с номером ( " + resume.getUuid() +
+            throw new DuplicateException("Резюме с номером ( " + resume.getUuid() +
                     " ) уже существует в хранилище.");
         }
         storage[size] = resume;
