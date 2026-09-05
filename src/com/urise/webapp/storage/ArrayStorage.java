@@ -1,6 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -19,12 +20,11 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         int resumeIndex = findResumeIndex(resume.getUuid());
-        if (resumeIndex != -1) {
-            storage[resumeIndex] = resume;
-        } else {
+        if (resumeIndex == -1) {
             throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
                     " ) нет в хранилище и его не возможно обновить.");
         }
+        storage[resumeIndex] = resume;
     }
 
     public void save(Resume resume) {
