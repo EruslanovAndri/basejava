@@ -1,7 +1,7 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * Array based storage for Resumes.
  */
 public class ArrayStorage {
-    private static final int STORAGE_LIMIT = 10000;
+    private static final int STORAGE_LIMIT = 1;
     private int size;
     public Resume[] storage = new Resume[STORAGE_LIMIT];
 
@@ -29,7 +29,7 @@ public class ArrayStorage {
 
     public void save(Resume resume) {
         if (size == STORAGE_LIMIT) {
-            throw new ArrayIndexOutOfBoundsException("В хранилище нет свободного места, резюме с номером (" +
+            throw new NoFreeSpaceException("В хранилище нет свободного места, резюме с номером (" +
                     resume.getUuid() + ") не может быть добавлено.");
         }
         int resumeIndex = findResumeIndex(resume.getUuid());

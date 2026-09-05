@@ -1,3 +1,4 @@
+import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 import java.io.BufferedReader;
@@ -40,7 +41,7 @@ public class MainArray {
                     try {
                         ARRAY_STORAGE.save(resume);
                         printAll();
-                    } catch (ArrayIndexOutOfBoundsException e) {
+                    } catch (NoFreeSpaceException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
