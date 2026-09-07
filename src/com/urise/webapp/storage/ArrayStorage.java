@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 /**
  * Array based storage for Resumes.
  */
-public class ArrayStorage {
+public class ArrayStorage implements Storage{
     private static final int STORAGE_LIMIT = 10000;
     private int size;
     public Resume[] storage = new Resume[STORAGE_LIMIT];
