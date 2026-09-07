@@ -3,7 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
-import java.util.Arrays;
+
 import java.util.NoSuchElementException;
 
 /**
@@ -11,10 +11,6 @@ import java.util.NoSuchElementException;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
 
     public void update(Resume resume) {
         int resumeIndex = findResumeIndex(resume.getUuid());
@@ -39,14 +35,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         size++;
     }
 
-    public Resume get(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
-        if (resumeIndex == -1) {
-            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
-        }
-        return storage[resumeIndex];
-    }
-
     public void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex == -1) {
@@ -57,11 +45,8 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[--size] = null;
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
 
-    private int findResumeIndex(String uuid) {
+    protected int findResumeIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
