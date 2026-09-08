@@ -3,22 +3,16 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-
-    @Override
-    public void update(Resume resume) {
-        int resumeIndex = findResumeIndex(resume.getUuid());
-        System.out.println("Update index " + resumeIndex);
+    public Resume get(String uuid) {
+        int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex < 0) {
-            throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
-                    " ) нет в хранилище и его не возможно обновить.");
+            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
         }
-        System.out.println("Resume was updated in Sorted array storage");
-        storage[resumeIndex] = resume;
+        return storage[resumeIndex];
     }
 
     @Override
@@ -40,12 +34,16 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         size++;
     }
 
-    public Resume get(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
+    @Override
+    public void update(Resume resume) {
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        System.out.println("Update index " + resumeIndex);
         if (resumeIndex < 0) {
-            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
+            throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
+                    " ) нет в хранилище и его не возможно обновить.");
         }
-        return storage[resumeIndex];
+        System.out.println("Resume was updated in Sorted array storage");
+        storage[resumeIndex] = resume;
     }
 
     @Override
