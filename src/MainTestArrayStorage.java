@@ -1,7 +1,7 @@
+import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.Storage;
-
 import java.util.NoSuchElementException;
 
 /**
@@ -19,6 +19,12 @@ public class MainTestArrayStorage {
         r3.setUuid("uuid3");
 
         ARRAY_STORAGE.save(r1);
+        try {
+            ARRAY_STORAGE.save(r1);
+        } catch (DuplicateException e) {
+            System.out.println(e.getMessage());
+        }
+
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 
