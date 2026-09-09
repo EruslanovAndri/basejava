@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+    @Override
     public void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex < 0) {
@@ -17,6 +18,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[--size] = null;
     }
 
+    @Override
     public Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (resumeIndex < 0) {
