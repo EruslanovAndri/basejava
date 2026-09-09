@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public abstract class AbstractArrayStorage implements Storage {
+    protected static final String DEFAULT_EXCEPTION_MESSAGE = "Резюме с номером ( ";
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
@@ -24,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (checkResumeIndex(resumeIndex)) {
-            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
+            throw new NoSuchElementException(DEFAULT_EXCEPTION_MESSAGE + uuid + " ) нет в хранилище.");
         }
         return storage[resumeIndex];
     }
