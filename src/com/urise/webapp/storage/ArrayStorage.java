@@ -9,16 +9,6 @@ import java.util.NoSuchElementException;
  * Array based storage for Resumes.
  */
 public class ArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void delete(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
-        if (resumeIndex == -1) {
-            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
-                    "нет в хранилище.");
-        }
-        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
-        storage[--size] = null;
-    }
 
     @Override
     public Resume get(String uuid) {
@@ -62,5 +52,10 @@ public class ArrayStorage extends AbstractArrayStorage {
             }
         }
         return -1;
+    }
+
+    @Override
+    protected boolean checkResumeIndex(int resumeIndex) {
+        return resumeIndex == -1 ? true : false;
     }
 }

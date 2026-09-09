@@ -7,16 +7,6 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    @Override
-    public void delete(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
-        if (resumeIndex < 0) {
-            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
-                    "нет в хранилище.");
-        }
-        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
-        storage[--size] = null;
-    }
 
     @Override
     public Resume get(String uuid) {
@@ -60,5 +50,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         Resume searchResume = new Resume();
         searchResume.setUuid(uuid);
         return Arrays.binarySearch(storage, 0, size, searchResume);
+    }
+
+    @Override
+    protected boolean checkResumeIndex(int resumeIndex) {
+        return resumeIndex < 0 ? true : false;
     }
 }
