@@ -9,13 +9,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     public void save(Resume resume) {
         if (size == STORAGE_LIMIT) {
-            throw new NoFreeSpaceException("В хранилище нет свободного места, резюме с номером (" +
-                    resume.getUuid() + ") не может быть добавлено.");
+            throw new NoFreeSpaceException(DEFAULT_EXCEPTION_MESSAGE +
+                    resume.getUuid() + ") не может быть добавлено, нет свободного места.");
         }
 
         int resumeIndex = findResumeIndex(resume.getUuid());
         if (resumeIndex >= 0) {
-            throw new DuplicateException("Резюме с номером ( " + resume.getUuid() +
+            throw new DuplicateException(DEFAULT_EXCEPTION_MESSAGE + resume.getUuid() +
                     " ) уже существует в хранилище.");
         }
         int resumePosition = -resumeIndex - 1;
