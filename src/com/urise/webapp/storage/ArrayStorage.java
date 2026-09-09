@@ -3,22 +3,11 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
-import java.util.NoSuchElementException;
 
 /**
  * Array based storage for Resumes.
  */
 public class ArrayStorage extends AbstractArrayStorage {
-
-    @Override
-    public Resume get(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
-        if (resumeIndex == -1) {
-            throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
-        }
-        return storage[resumeIndex];
-    }
-
     @Override
     public void save(Resume resume) {
         if (size == STORAGE_LIMIT) {
@@ -32,16 +21,6 @@ public class ArrayStorage extends AbstractArrayStorage {
         }
         storage[size] = resume;
         size++;
-    }
-
-    @Override
-    public void update(Resume resume) {
-        int resumeIndex = findResumeIndex(resume.getUuid());
-        if (resumeIndex == -1) {
-            throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
-                    " ) нет в хранилище и его не возможно обновить.");
-        }
-        storage[resumeIndex] = resume;
     }
 
     @Override
