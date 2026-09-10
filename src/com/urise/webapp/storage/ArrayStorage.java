@@ -35,6 +35,6 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected boolean checkResumeIndex(int resumeIndex) {
-        return resumeIndex == -1 ? true : false;
+        return resumeIndex == -1;
     }
 }

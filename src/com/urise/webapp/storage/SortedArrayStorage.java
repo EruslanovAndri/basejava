@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.DuplicateException;
 import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
@@ -33,6 +34,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected boolean checkResumeIndex(int resumeIndex) {
-        return resumeIndex < 0 ? true : false;
+        return resumeIndex < 0;
     }
 }
