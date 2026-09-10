@@ -37,4 +37,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     protected boolean checkResumeIndex(int resumeIndex) {
         return resumeIndex == -1;
     }
+
+    @Override
+    protected void deleteByIndex(int resumeIndex) {
+        for (int i = resumeIndex; i < size; i++) {
+            storage[i] = storage[i + 1];
+            storage[--size] = null;
+        }
+    }
 }

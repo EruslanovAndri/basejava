@@ -34,6 +34,13 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected boolean checkResumeIndex(int resumeIndex) {
+        SortedArrayStorage sortedArrayStorage = new SortedArrayStorage();
         return resumeIndex < 0;
+    }
+
+    @Override
+    protected void deleteByIndex(int resumeIndex) {
+        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
+        storage[--size] = null;
     }
 }

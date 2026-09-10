@@ -6,23 +6,22 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10000;
+    protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
     @Override
-    public void delete(String uuid) {
+    final public void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (checkResumeIndex(resumeIndex)) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
                     "нет в хранилище.");
         }
-        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
-        storage[--size] = null;
+        deleteByIndex(resumeIndex);
     }
 
     @Override
-    public Resume get(String uuid) {
+    final public Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (checkResumeIndex(resumeIndex)) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
@@ -47,7 +46,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void update(Resume resume) {
+    final public void update(Resume resume) {
         int resumeIndex = findResumeIndex(resume.getUuid());
         if (checkResumeIndex(resumeIndex)) {
             throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
@@ -59,4 +58,6 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract int findResumeIndex(String uuid);
 
     protected abstract boolean checkResumeIndex(int resumeIndex);
+
+    protected abstract void deleteByIndex(int resumeIndex);
 }
