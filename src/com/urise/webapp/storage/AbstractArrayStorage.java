@@ -1,7 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.DuplicateException;
+import com.urise.webapp.exception.NoFreeSpaceException;
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
@@ -11,7 +12,7 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size;
 
     @Override
-    final public void delete(String uuid) {
+    public final void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (checkResumeIndex(resumeIndex)) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) невозможно удалить его " +
@@ -21,7 +22,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    final public Resume get(String uuid) {
+    public final Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         if (checkResumeIndex(resumeIndex)) {
             throw new NoSuchElementException("Резюме с номером ( " + uuid + " ) нет в хранилище.");
@@ -41,12 +42,26 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
+    public final void save(Resume resume) {
+        if (size == STORAGE_LIMIT) {
+            throw new NoFreeSpaceException("Резюме с номером ( " +
+                    resume.getUuid() + ") не может быть добавлено, нет свободного места.");
+        }
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        if (resumeIndex >= 0) {
+            throw new DuplicateException("Резюме с номером ( " + resume.getUuid() +
+                    " ) уже существует в хранилище.");
+        }
+        saveResume(resume);
+    }
+
+    @Override
     public int size() {
         return size;
     }
 
     @Override
-    final public void update(Resume resume) {
+    public final void update(Resume resume) {
         int resumeIndex = findResumeIndex(resume.getUuid());
         if (checkResumeIndex(resumeIndex)) {
             throw new NoSuchElementException("Резюме с номером ( " + resume.getUuid() +
@@ -60,4 +75,7 @@ public abstract class AbstractArrayStorage implements Storage {
     protected abstract boolean checkResumeIndex(int resumeIndex);
 
     protected abstract void deleteByIndex(int resumeIndex);
+
+    protected abstract void saveResume(Resume resume);
 }
+
