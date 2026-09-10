@@ -11,12 +11,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     public void save(Resume resume) {
         if (size == STORAGE_LIMIT) {
-            throw new NoFreeSpaceException(DEFAULT_EXCEPTION_MESSAGE +
+            throw new NoFreeSpaceException("Резюме с номером ( " +
                     resume.getUuid() + ") не может быть добавлено, нет свободного места.");
         }
         int resumeIndex = findResumeIndex(resume.getUuid());
         if (resumeIndex != -1) {
-            throw new DuplicateException(DEFAULT_EXCEPTION_MESSAGE+ resume.getUuid() +
+            throw new DuplicateException("Резюме с номером ( " + resume.getUuid() +
                     " ) уже существует в хранилище.");
         }
         storage[size] = resume;
