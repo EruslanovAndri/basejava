@@ -13,22 +13,18 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected boolean checkResumeIndex(int resumeIndex) {
-        SortedArrayStorage sortedArrayStorage = new SortedArrayStorage();
         return resumeIndex < 0;
     }
 
     @Override
     protected void deleteByIndex(int resumeIndex) {
         System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
-        storage[--size] = null;
     }
 
     @Override
-    protected void saveResume(Resume resume) {
-        int resumeIndex = findResumeIndex(resume.getUuid());
+    protected void saveResume(Resume resume, int resumeIndex) {
         int resumePosition = -resumeIndex - 1;
         System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
         storage[resumePosition] = resume;
-        size++;
     }
 }

@@ -23,15 +23,11 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteByIndex(int resumeIndex) {
-        for (int i = resumeIndex; i < size; i++) {
-            storage[i] = storage[i + 1];
-            storage[--size] = null;
-        }
+        storage[resumeIndex] = storage[resumeIndex + 1];
     }
 
     @Override
-    protected void saveResume(Resume resume) {
+    protected void saveResume(Resume resume, int resumeIndex) {
         storage[size] = resume;
-        size++;
     }
 }
