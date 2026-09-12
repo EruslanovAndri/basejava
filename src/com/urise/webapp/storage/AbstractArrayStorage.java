@@ -19,6 +19,7 @@ public abstract class AbstractArrayStorage implements Storage {
                     "нет в хранилище.");
         }
         deleteByIndex(resumeIndex);
+        storage[--size] = null;
     }
 
     @Override
@@ -52,7 +53,8 @@ public abstract class AbstractArrayStorage implements Storage {
             throw new DuplicateException("Резюме с номером ( " + resume.getUuid() +
                     " ) уже существует в хранилище.");
         }
-        saveResume(resume);
+        saveResume(resume, resumeIndex);
+        size++;
     }
 
     @Override
@@ -76,6 +78,6 @@ public abstract class AbstractArrayStorage implements Storage {
 
     protected abstract void deleteByIndex(int resumeIndex);
 
-    protected abstract void saveResume(Resume resume);
+    protected abstract void saveResume(Resume resume, int resumeIndex);
 }
 
