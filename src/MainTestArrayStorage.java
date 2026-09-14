@@ -1,4 +1,4 @@
-import com.urise.webapp.exception.DuplicateException;
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
@@ -18,7 +18,7 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r1);
         try {
             ARRAY_STORAGE.save(r1);
-        } catch (DuplicateException e) {
+        } catch (ExistStorageException e) {
             System.out.println(e.getMessage());
         }
 
