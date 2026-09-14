@@ -1,5 +1,5 @@
-import com.urise.webapp.exception.DuplicateException;
-import com.urise.webapp.exception.NoFreeSpaceException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.Storage;
@@ -7,7 +7,6 @@ import com.urise.webapp.storage.Storage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.NoSuchElementException;
 
 /**
  * Interactive test for com.urise.webapp.storage.ArrayStorage implementation
@@ -41,12 +40,11 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    resume = new Resume();
-                    resume.setUuid(uuid);
+                    resume = new Resume(uuid);
                     try {
                         ARRAY_STORAGE.save(resume);
                         printAll();
-                    } catch (NoFreeSpaceException | DuplicateException e) {
+                    } catch (StorageException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -54,24 +52,23 @@ public class MainArray {
                     try {
                         ARRAY_STORAGE.delete(uuid);
                         printAll();
-                    } catch (NoSuchElementException e) {
+                    } catch (NotExistStorageException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case "get":
                     try {
                         System.out.println(ARRAY_STORAGE.get(uuid));
-                    } catch (NoSuchElementException e) {
+                    } catch (NotExistStorageException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
                 case "update":
-                    resume = new Resume();
-                    resume.setUuid(uuid);
+                    resume = new Resume(uuid);
                     try {
                         ARRAY_STORAGE.update(resume);
                         printAll();
-                    } catch (NoSuchElementException e) {
+                    } catch (NotExistStorageException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
