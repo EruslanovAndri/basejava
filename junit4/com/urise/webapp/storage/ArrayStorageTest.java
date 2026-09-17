@@ -5,9 +5,25 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class ArrayStorageTest extends AbstractArrayStorageTest {
+    private static Storage storage;
+    private static final String UUID_1 = "UUID_1";
+    private static final String UUID_2 = "UUID_2";
+    private static final String UUID_3 = "UUID_3";
+    @Before
+    public void setUp() {
+        storage = new ArrayStorage();
+        storage.clear();
+        storage.save(new Resume(UUID_1));
+        storage.save(new Resume(UUID_2));
+        storage.save(new Resume(UUID_3));
+    }
+
     @Test
     public void size() {
         Assert.assertEquals(3, storage.size());
@@ -25,7 +41,10 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 
     @Test
     public void delete() {
+        System.out.println("Delete method:");
+        System.out.println("Before: " + Arrays.toString(storage.getAll()));
         storage.delete("UUID_1");
+        System.out.println("After: " + Arrays.toString(storage.getAll()));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -60,7 +79,10 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 
     @Test
     public void clear() {
+        System.out.println("Clear method:");
+        System.out.println("Before: " + Arrays.toString(storage.getAll()));
         storage.clear();
+        System.out.println("After: " + Arrays.toString(storage.getAll()));
     }
 
     @Test(expected = StorageException.class)
