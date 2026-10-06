@@ -8,9 +8,9 @@ import com.urise.webapp.storage.Storage;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public abstract class AbstractArrayStorageTest {
     protected Storage storage;
@@ -19,11 +19,12 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_2 = "UUID_2";
     private static final String UUID_3 = "UUID_3";
 
-    protected abstract Storage createStorage();
+    protected AbstractArrayStorageTest(Storage storage) {
+        this.storage = storage;
+    }
 
     @Before
     public void setUp() throws Exception {
-        storage = createStorage();
         storage.clear();
         storage.save(new Resume(UUID_1));
         storage.save(new Resume(UUID_2));
@@ -32,48 +33,52 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void delete() {
-        System.out.println("Delete method:");
-        System.out.println("Before: " + Arrays.toString(storage.getAll()));
-        storage.delete("UUID_1");
-        System.out.println("After: " + Arrays.toString(storage.getAll()));
+        assertEquals(3, storage.size());
+        storage.delete(UUID_1);
+        assertEquals(2, storage.size());
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
+        assertEquals(3, storage.size());
         storage.delete("UUID_5");
+        assertEquals(3, storage.size());
     }
 
     @Test
     public void get() {
-        assertEquals(new Resume("UUID_1"), storage.get("UUID_1"));
+        assertEquals(storage.get(UUID_1), storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() {
-        assertEquals(new Resume("UUID_5"), storage.get("UUID_5"));
+        assertEquals(storage.get("UUID_5"), storage.get("UUID_5"));
     }
 
     @Test
     public void clear() {
-        System.out.println("Clear method:");
-        System.out.println("Before: " + Arrays.toString(storage.getAll()));
+        assertEquals(3, storage.size());
         storage.clear();
-        System.out.println("After: " + Arrays.toString(storage.getAll()));
+        assertEquals(0, storage.size());
     }
 
     @Test
     public void getAll() {
-        storage.getAll();
+        assertTrue(3 == storage.getAll().length);
     }
 
     @Test
     public void save() {
+        assertEquals(3, storage.size());
         storage.save(new Resume("UUID_4"));
+        assertEquals(4, storage.size());
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(new Resume(UUID_3));
+        assertEquals(3, storage.size());
+        storage.save(storage.get(UUID_3));
+        assertEquals(4, storage.size());
     }
 
     @Test
@@ -83,18 +88,27 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() {
-        storage.update(new Resume(UUID_1));
+        Resume r = storage.get(UUID_1);
+        storage.update(storage.get(UUID_1));
+        assertEquals(storage.get(UUID_1).hashCode(), r.hashCode());
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume("UUID_5"));
+        storage.update(storage.get("UUID_5"));
     }
 
     @Test(expected = StorageException.class)
     public void checkOverflowStorageException() {
-        for (int i = 0; i < STORAGE_LIMIT; i++) {
-            storage.save(new Resume(Integer.toString(i)));
+        try {
+            for (int i = 0; i < STORAGE_LIMIT - 3; i++) {
+                storage.save(new Resume(Integer.toString(i)));
+            }
+        } catch (Exception e) {
+            fail("Переполнение произошло раньше времени.");
         }
+        System.out.println("Имя метода: checkOverflowStorageException: " + storage.getClass());
+        System.out.println("Кол-во добавленных резюме = " + storage.size());
+        storage.save(new Resume("UUID_10"));
     }
 }
