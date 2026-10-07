@@ -96,7 +96,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(storage.get("UUID_5"));
+        storage.update(storage.get(UUID_4));
     }
 
     @Test(expected = StorageException.class)
