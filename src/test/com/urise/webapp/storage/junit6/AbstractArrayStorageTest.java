@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
@@ -47,7 +48,6 @@ public abstract class AbstractArrayStorageTest {
         assertThrows(NotExistStorageException.class, () -> {
             storage.delete(UUID_4);
         });
-
     }
 
     @Test
