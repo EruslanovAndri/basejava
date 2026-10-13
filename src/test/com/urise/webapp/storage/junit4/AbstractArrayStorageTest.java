@@ -21,6 +21,11 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_3 = "UUID_3";
     private static final String UUID_4 = "UUID_4";
 
+    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final Resume RESUME_4 = new Resume(UUID_4);
+
     protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
@@ -28,9 +33,9 @@ public abstract class AbstractArrayStorageTest {
     @Before
     public void setUp() {
         storage.clear();
-        storage.save(new Resume(UUID_1));
-        storage.save(new Resume(UUID_2));
-        storage.save(new Resume(UUID_3));
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -48,8 +53,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void get() {
-        Resume resume = storage.get(UUID_1);
-        assertSame(storage.get(UUID_1), resume);
+        Resume resume = new Resume(UUID_1);
+        assertEquals(storage.get(UUID_1), resume);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -61,28 +66,28 @@ public abstract class AbstractArrayStorageTest {
     public void clear() {
         storage.clear();
         assertEquals(0, storage.size());
-        // Не могу понять как проверить через assertEquals на array isEmpty!!!!
     }
 
     @Test
     public void getAll() {
         Resume[] resumes = new Resume[3];
-        resumes[0] = new Resume(UUID_1);
-        resumes[1] = new Resume(UUID_2);
-        resumes[2] = new Resume(UUID_3);
+        resumes[0] = RESUME_1;
+        resumes[1] = RESUME_2;
+        resumes[2] = RESUME_3;
         assertArrayEquals(storage.getAll(), resumes);
     }
 
     @Test
     public void save() {
         storage.save(new Resume(UUID_4));
+        assertEquals(4, storage.size());
         Resume resume = new Resume(UUID_4);
         assertEquals(storage.get(UUID_4), resume);
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(new Resume(UUID_3));
+        storage.save(RESUME_3);
     }
 
     @Test
@@ -99,20 +104,20 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume(UUID_4));
+        storage.update(RESUME_4);
     }
 
     @Test(expected = StorageException.class)
     public void checkOverflowStorageException() {
         try {
             for (int i = 0; i < STORAGE_LIMIT - 3; i++) {
-                storage.save(new Resume(Integer.toString(i)));
+                storage.save(new Resume());
             }
         } catch (Exception e) {
             fail("Переполнение произошло раньше времени.");
         }
         System.out.println("Имя метода: checkOverflowStorageException: " + storage.getClass());
         System.out.println("Кол-во добавленных резюме = " + storage.size());
-        storage.save(new Resume(UUID_4));
+        storage.save(RESUME_4);
     }
 }
