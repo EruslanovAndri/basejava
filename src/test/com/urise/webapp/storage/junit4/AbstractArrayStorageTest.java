@@ -79,7 +79,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        storage.save(new Resume(UUID_4));
+        storage.save(RESUME_4);
         assertEquals(4, storage.size());
         Resume resume = new Resume(UUID_4);
         assertEquals(storage.get(UUID_4), resume);
