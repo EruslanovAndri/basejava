@@ -5,13 +5,11 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.Storage;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,10 +40,10 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void delete() {
+        assertEquals(3, storage.size());
+        storage.delete(UUID_1);
+        assertEquals(2, storage.size());
         assertThrows(NotExistStorageException.class, () -> {
-            assertEquals(3, storage.size());
-            storage.delete(UUID_1);
-            assertEquals(2, storage.size());
             storage.get(UUID_1);
         });
     }
@@ -82,15 +80,14 @@ public abstract class AbstractArrayStorageTest {
         resumes[0] = RESUME_1;
         resumes[1] = RESUME_2;
         resumes[2] = RESUME_3;
-        assertArrayEquals(storage.getAll(), resumes);
+        assertArrayEquals(resumes, storage.getAll());
     }
 
     @Test
     public void save() {
         storage.save(RESUME_4);
-        Assert.assertEquals(4, storage.size());
-        Resume resume = new Resume(UUID_4);
-        assertEquals(storage.get(UUID_4), resume);
+        assertEquals(4, storage.size());
+        assertEquals(RESUME_4, storage.get(UUID_4));
     }
 
     @Test
@@ -109,7 +106,7 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume resume = new Resume(UUID_1);
         storage.update(resume);
-        assertSame(storage.get(UUID_1), resume);
+        assertSame(resume, storage.get(UUID_1));
     }
 
     @Test
@@ -121,14 +118,14 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void checkOverflowStorageException() {
-        assertThrows(StorageException.class, () -> {
-            try {
-                for (int i = 0; i < STORAGE_LIMIT - 3; i++) {
-                    storage.save(new Resume(Integer.toString(i)));
-                }
-            } catch (Exception e) {
-                fail("Переполнение произошло раньше времени.");
+        try {
+            for (int i = 0; i < STORAGE_LIMIT - 3; i++) {
+                storage.save(new Resume(Integer.toString(i)));
             }
+        } catch (Exception e) {
+            fail("Переполнение произошло раньше времени.");
+        }
+        assertThrows(StorageException.class, () -> {
             System.out.println("Имя метода: checkOverflowStorageException: " + storage.getClass());
             System.out.println("Кол-во добавленных резюме = " + storage.size());
             storage.save(RESUME_4);
