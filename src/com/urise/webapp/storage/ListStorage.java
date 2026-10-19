@@ -1,0 +1,70 @@
+package com.urise.webapp.storage;
+
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.model.Resume;
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class ListStorage extends AbstractStorage {
+    @Override
+    protected void doClear() {
+        storage.clear();
+    }
+
+    @Override
+    protected int findResumeIndex(String uuid) {
+        int index = IntStream.range(0, storage.size())
+                .filter((i -> uuid.equals(storage.get(i).getUuid())))
+                .findFirst()
+                .orElse(-1);
+        return index;
+    }
+
+    @Override
+    protected void deleteByIndex(int resumeIndex) {
+        storage.remove(resumeIndex);
+    }
+
+    @Override
+    protected void clearSlot() {
+    }
+
+    @Override
+    protected Resume getAt(int index) {
+        return storage.get(index);
+    }
+
+    @Override
+    protected Resume[] doGetAll() {
+        return List.copyOf(storage).toArray(new Resume[storage.size()]);
+    }
+
+    @Override
+    protected void checkStorageLimit(Resume resume) {
+    }
+
+    @Override
+    protected void checkExistResume(Resume resume) {
+        if (storage.contains(resume)) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+    }
+
+    @Override
+    protected void saveResume(Resume resume, int resumeIndex) {
+        storage.add(resume);
+    }
+
+    @Override
+    protected void increaseSize() { }
+
+    @Override
+    protected int computeSize() {
+        return storage.size();
+    }
+
+    @Override
+    protected void doUpdate(Resume resume, int resumeIndex) {
+        storage.set(resumeIndex, resume);
+    }
+}
