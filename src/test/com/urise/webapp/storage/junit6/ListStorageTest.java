@@ -1,0 +1,9 @@
+package test.com.urise.webapp.storage.junit6;
+
+import com.urise.webapp.storage.ListStorage;
+
+public class ListStorageTest extends AbstractStorageTest {
+    public ListStorageTest() {
+        super(new ListStorage());
+    }
+}
