@@ -1,6 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
@@ -8,11 +9,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected int findResumeIndex(String uuid) {
         Resume searchResume = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchResume);
-    }
-
-    @Override
-    protected boolean checkResumeIndex(int resumeIndex) {
-        return resumeIndex < 0;
     }
 
     @Override
