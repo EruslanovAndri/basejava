@@ -116,10 +116,6 @@ public abstract class AbstractArrayStorageTest {
         } catch (Exception e) {
             fail("Переполнение произошло раньше времени.");
         }
-        assertThrows(StorageException.class, () -> {
-            System.out.println("Имя метода: checkOverflowStorageException: " + storage.getClass());
-            System.out.println("Кол-во добавленных резюме = " + storage.size());
-            storage.save(RESUME_4);
-        });
+        assertThrows(StorageException.class, () -> storage.save(RESUME_4));
     }
 }
