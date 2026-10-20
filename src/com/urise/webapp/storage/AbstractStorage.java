@@ -50,25 +50,27 @@ public abstract class AbstractStorage implements Storage {
         doUpdate(resume, resumeIndex);
     }
 
+    protected void deleteByIndex(int resumeIndex) {
+        storage.remove(resumeIndex);
+    }
+
+    protected void checkStorageLimit(Resume resume) { }
+
+    protected void clearSlot() { }
+
+    protected void increaseSize() { }
+
     protected abstract void doClear();
 
     protected abstract int findResumeIndex(String uuid);
-
-    protected abstract void deleteByIndex(int resumeIndex);
-
-    protected abstract void clearSlot();
 
     protected abstract Resume getAt(int index);
 
     protected abstract Resume[] doGetAll();
 
-    protected abstract void checkStorageLimit(Resume resume);
-
     protected abstract void checkExistResume(Resume resume);
 
     protected abstract void saveResume(Resume resume, int resumeIndex);
-
-    protected abstract void increaseSize();
 
     protected abstract int computeSize();
 
