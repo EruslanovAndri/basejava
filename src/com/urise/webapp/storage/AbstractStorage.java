@@ -15,14 +15,16 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public final void delete(String uuid) {
-        int resumeIndex = validateUuid(uuid);
+        int resumeIndex = findResumeIndex(uuid);
+        validateExistResume(resumeIndex, uuid);
         deleteByIndex(resumeIndex);
         clearSlot();
     }
 
     @Override
     public final Resume get(String uuid) {
-        int resumeIndex = validateUuid(uuid);
+        int resumeIndex = findResumeIndex(uuid);
+        validateExistResume(resumeIndex, uuid);
         return getAt(resumeIndex);
     }
 
@@ -46,19 +48,21 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public final void update(Resume resume) {
-        int resumeIndex = validateUuid(resume.getUuid());
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        validateExistResume(resumeIndex, resume.getUuid());
         doUpdate(resume, resumeIndex);
     }
 
-    protected void deleteByIndex(int resumeIndex) {
-        storage.remove(resumeIndex);
+    protected void checkStorageLimit(Resume resume) {
     }
 
-    protected void checkStorageLimit(Resume resume) { }
+    protected void clearSlot() {
+    }
 
-    protected void clearSlot() { }
+    protected void increaseSize() {
+    }
 
-    protected void increaseSize() { }
+    protected abstract void deleteByIndex(int resumeIndex);
 
     protected abstract void doClear();
 
@@ -76,11 +80,9 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void doUpdate(Resume resume, int resumeIndex);
 
-    private int validateUuid(String uuid) {
-        int resumeIndex = findResumeIndex(uuid);
+    private void validateExistResume(int resumeIndex, String uuid) {
         if (resumeIndex < 0) {
             throw new NotExistStorageException(uuid);
         }
-        return resumeIndex;
     }
 }

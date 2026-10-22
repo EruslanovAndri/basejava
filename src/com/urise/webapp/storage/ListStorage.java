@@ -27,7 +27,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected Resume[] doGetAll() {
-        return List.copyOf(storage).toArray(new Resume[storage.size()]);
+        return List.copyOf(storage).toArray(Resume[]::new);
     }
 
     @Override
@@ -50,5 +50,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected void doUpdate(Resume resume, int resumeIndex) {
         storage.set(resumeIndex, resume);
+    }
+
+    @Override
+    protected void deleteByIndex(int resumeIndex) {
+        storage.remove(resumeIndex);
     }
 }
