@@ -55,8 +55,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void deleteByIndex(int resumeIndex);
 
-    protected abstract void doClear();
-
     protected abstract int findResumeIndex(String uuid);
 
     protected abstract Resume getAt(int index);
