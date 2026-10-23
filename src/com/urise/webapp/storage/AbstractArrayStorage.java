@@ -16,6 +16,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
+    @Override
+    protected void saveResume(Resume resume) {
+        checkStorageLimit(resume);
+        addNewResume(resume);
+        increaseSize();
+    }
+
     protected void clearSlot() {
         storage[--size] = null;
     }

@@ -1,7 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
@@ -23,6 +22,5 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         resumePosition = -resumePosition - 1;
         System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
         storage[resumePosition] = resume;
-        increaseSize();
     }
 }

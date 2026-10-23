@@ -2,23 +2,13 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
-    protected List<Resume> storage = new ArrayList<>();
-
-    @Override
-    public final void clear() {
-        doClear();
-    }
-
     @Override
     public final void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         validateExistResume(resumeIndex, uuid);
         deleteByIndex(resumeIndex);
-        clearSlot();
     }
 
     @Override
@@ -35,10 +25,8 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public final void save(Resume resume) {
-        checkStorageLimit(resume);
         checkExistResume(resume);
-        saveResume(resume, findResumeIndex(resume.getUuid()));
-        increaseSize();
+        saveResume(resume);
     }
 
     @Override
