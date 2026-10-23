@@ -53,15 +53,6 @@ public abstract class AbstractStorage implements Storage {
         doUpdate(resume, resumeIndex);
     }
 
-    protected void checkStorageLimit(Resume resume) {
-    }
-
-    protected void clearSlot() {
-    }
-
-    protected void increaseSize() {
-    }
-
     protected abstract void deleteByIndex(int resumeIndex);
 
     protected abstract void doClear();
