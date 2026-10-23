@@ -57,5 +57,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected void doUpdate(Resume resume, int resumeIndex) {
         storage[resumeIndex] = resume;
     }
+
+    protected abstract void addNewResume(Resume resume);
 }
 
