@@ -30,7 +30,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    @Override
     protected void checkStorageLimit(Resume resume) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Нет свободного места.", resume.getUuid());
