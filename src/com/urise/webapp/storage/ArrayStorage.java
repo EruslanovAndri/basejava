@@ -19,6 +19,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void deleteByIndex(int resumeIndex) {
         storage[resumeIndex] = storage[size - 1];
+        clearSlot();
     }
 
     @Override
