@@ -26,5 +26,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     protected void saveResume(Resume resume, int resumeIndex) {
         checkStorageLimit(resume);
         storage[size] = resume;
+        increaseSize();
     }
 }
