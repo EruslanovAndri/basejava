@@ -22,5 +22,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         int resumePosition = -resumeIndex - 1;
         System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
         storage[resumePosition] = resume;
+        increaseSize();
     }
 }
