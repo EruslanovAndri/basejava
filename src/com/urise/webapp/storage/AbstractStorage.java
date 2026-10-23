@@ -63,7 +63,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void checkExistResume(Resume resume);
 
-    protected abstract void saveResume(Resume resume, int resumeIndex);
+    protected abstract void saveResume(Resume resume);
 
     protected abstract int computeSize();
 
