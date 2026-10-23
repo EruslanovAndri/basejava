@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class ListStorage extends AbstractStorage {
     @Override
-    protected void doClear() {
+    public void clear() {
         storage.clear();
     }
 
