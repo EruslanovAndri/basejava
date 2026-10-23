@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
+    protected static final int STORAGE_LIMIT = 10_000;
     private static final String UUID_1 = "UUID_1";
     private static final String UUID_2 = "UUID_2";
     private static final String UUID_3 = "UUID_3";
@@ -108,5 +109,4 @@ public abstract class AbstractStorageTest {
     public void updateNotExist() {
         storage.update(RESUME_4);
     }
-
 }
