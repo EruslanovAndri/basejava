@@ -44,7 +44,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-    @Override
     protected void increaseSize() {
         size++;
     }
