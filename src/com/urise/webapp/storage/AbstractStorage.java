@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
@@ -8,54 +9,45 @@ public abstract class AbstractStorage implements Storage {
     public final void delete(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         validateExistResume(resumeIndex, uuid);
-        deleteByIndex(resumeIndex);
+        deleteResume(resumeIndex);
     }
 
     @Override
     public final Resume get(String uuid) {
         int resumeIndex = findResumeIndex(uuid);
         validateExistResume(resumeIndex, uuid);
-        return getAt(resumeIndex);
-    }
-
-    @Override
-    public final Resume[] getAll() {
-        return doGetAll();
+        return getResume(resumeIndex);
     }
 
     @Override
     public final void save(Resume resume) {
-        checkExistResume(resume);
+        int resumeIndex = findResumeIndex(resume.getUuid());
+        checkExistResume(resume, resumeIndex);
         saveResume(resume);
-    }
-
-    @Override
-    public final int size() {
-        return computeSize();
     }
 
     @Override
     public final void update(Resume resume) {
         int resumeIndex = findResumeIndex(resume.getUuid());
         validateExistResume(resumeIndex, resume.getUuid());
-        doUpdate(resume, resumeIndex);
+        updateResume(resume, resumeIndex);
     }
 
-    protected abstract void deleteByIndex(int resumeIndex);
+    protected abstract void deleteResume(int resumeIndex);
 
-    protected abstract int findResumeIndex(String uuid);
-
-    protected abstract Resume getAt(int index);
-
-    protected abstract Resume[] doGetAll();
-
-    protected abstract void checkExistResume(Resume resume);
+    protected abstract Resume getResume(int index);
 
     protected abstract void saveResume(Resume resume);
 
-    protected abstract int computeSize();
+    protected abstract void updateResume(Resume resume, int resumeIndex);
 
-    protected abstract void doUpdate(Resume resume, int resumeIndex);
+    protected abstract int findResumeIndex(String uuid);
+
+    private void checkExistResume(Resume resume, int resumeIndex) {
+        if (resumeIndex >= 0) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+    }
 
     private void validateExistResume(int resumeIndex, String uuid) {
         if (resumeIndex < 0) {

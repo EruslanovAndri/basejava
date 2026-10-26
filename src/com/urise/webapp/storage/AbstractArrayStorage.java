@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import java.util.Arrays;
@@ -17,24 +16,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
+    public final Resume[] getAll() {
+        return Arrays.copyOf(storage, size);
+    }
+
+    @Override
+    public final int size() {
+        return size;
+    }
+
+    @Override
     protected void saveResume(Resume resume) {
         checkStorageLimit(resume);
         addNewResume(resume);
-        increaseSize();
-    }
-
-    protected void clearSlot() {
-        storage[--size] = null;
-    }
-
-    @Override
-    protected Resume getAt(int index) {
-        return storage[index];
-    }
-
-    @Override
-    protected Resume[] doGetAll() {
-        return Arrays.copyOf(storage, size);
+        size++;
     }
 
     protected void checkStorageLimit(Resume resume) {
@@ -44,24 +39,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void checkExistResume(Resume resume) {
-        int resumeIndex = findResumeIndex(resume.getUuid());
-        if (resumeIndex >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-    }
-
-    protected void increaseSize() {
-        size++;
+    protected void deleteResume(int resumeIndex) {
+        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
+        storage[--size] = null;
     }
 
     @Override
-    protected int computeSize() {
-        return size;
+    protected Resume getResume(int index) {
+        return storage[index];
     }
 
     @Override
-    protected void doUpdate(Resume resume, int resumeIndex) {
+    protected void updateResume(Resume resume, int resumeIndex) {
         storage[resumeIndex] = resume;
     }
 
