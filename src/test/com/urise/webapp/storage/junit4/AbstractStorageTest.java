@@ -71,7 +71,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void testGetAll() {
+    public void getAll() {
         Resume[] resumes = new Resume[3];
         assertTrue(resumes.length == storage.size());
         resumes[0] = RESUME_1;
@@ -94,12 +94,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void testSize() {
+    public void size() {
         assertEquals(3, storage.size());
     }
 
     @Test
-    public void testUpdate() {
+    public void update() {
         Resume resume = new Resume(UUID_1);
         storage.update(resume);
         assertSame(resume, storage.get(UUID_1));
