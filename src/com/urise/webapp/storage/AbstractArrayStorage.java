@@ -55,5 +55,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     protected abstract void addNewResume(Resume resume);
+
+    protected abstract void deleteResumeByIndex(int resumeIndex);
 }
 
