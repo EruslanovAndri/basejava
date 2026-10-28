@@ -35,7 +35,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void deleteResume(int resumePosition);
 
-    protected abstract Resume getResume(int position);
+    protected abstract Resume getResume(int resumePosition);
 
     protected abstract void saveResume(Resume resume);
 

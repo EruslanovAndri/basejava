@@ -4,8 +4,10 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.Storage;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,5 +104,17 @@ public abstract class AbstractStorageTest {
     @Test
     public void updateNotExistTest() {
         assertThrows(NotExistStorageException.class, () -> storage.update(RESUME_4));
+    }
+
+    @Test
+    public void checkOverflowStorageExceptionTest() {
+        try {
+            for (int i = 0; i < STORAGE_LIMIT - 3; i++) {
+                storage.save(new Resume(Integer.toString(i)));
+            }
+        } catch (Exception e) {
+            fail("Переполнение произошло раньше времени.");
+        }
+        assertThrows(StorageException.class, () -> storage.save(RESUME_4));
     }
 }
