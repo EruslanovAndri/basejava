@@ -14,7 +14,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected int findResumeIndex(String uuid) {
+    protected int findResume(String uuid) {
         return IntStream.range(0, storage.size())
                 .filter((i -> uuid.equals(storage.get(i).getUuid())))
                 .findFirst()
