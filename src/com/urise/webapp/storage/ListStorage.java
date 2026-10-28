@@ -19,7 +19,6 @@ public class ListStorage extends AbstractStorage {
                 .filter((i -> uuid.equals(storage.get(i).getUuid())))
                 .findFirst()
                 .orElse(-1);
-        return index;
     }
 
     @Override
