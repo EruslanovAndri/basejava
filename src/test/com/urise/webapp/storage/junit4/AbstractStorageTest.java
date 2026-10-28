@@ -39,7 +39,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void clear() {
+    public void clearTest() {
         assertEquals(3, storage.size());
         storage.clear();
         assertEquals(0, storage.size());
@@ -47,7 +47,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void delete() {
+    public void deleteTest() {
         assertEquals(3, storage.size());
         storage.delete(UUID_1);
         assertEquals(2, storage.size());
@@ -55,23 +55,23 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void deleteNotExist() {
+    public void deleteNotExistTest() {
         storage.delete(UUID_4);
     }
 
     @Test
-    public void get() {
+    public void getTest() {
         Resume resume = new Resume(UUID_1);
         assertEquals(resume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void getNotExist() {
+    public void getNotExistTest() {
         storage.get(UUID_4);
     }
 
     @Test
-    public void getAll() {
+    public void getAllTest() {
         Resume[] resumes = new Resume[3];
         assertTrue(resumes.length == storage.size());
         resumes[0] = RESUME_1;
@@ -81,7 +81,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void save() {
+    public void saveTest() {
         storage.save(RESUME_4);
         assertEquals(4, storage.size());
         Resume resume = new Resume(UUID_4);
@@ -89,24 +89,24 @@ public abstract class AbstractStorageTest {
     }
 
     @Test(expected = ExistStorageException.class)
-    public void saveExist() {
+    public void saveExistTest() {
         storage.save(RESUME_1);
     }
 
     @Test
-    public void size() {
+    public void sizeTest() {
         assertEquals(3, storage.size());
     }
 
     @Test
-    public void update() {
+    public void updateTest() {
         Resume resume = new Resume(UUID_1);
         storage.update(resume);
         assertSame(resume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
-    public void updateNotExist() {
+    public void updateNotExistTest() {
         storage.update(RESUME_4);
     }
 }
