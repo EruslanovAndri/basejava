@@ -40,7 +40,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     protected void deleteResume(int resumeIndex) {
-        System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
+        deleteResumeByIndex(resumeIndex);
         storage[--size] = null;
     }
 
