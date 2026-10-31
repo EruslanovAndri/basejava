@@ -10,6 +10,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
+    protected abstract void addNewResume(Resume resume);
+
+    protected abstract void deleteResumeByIndex(int resumeIndex);
+
     @Override
     public final void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -40,23 +44,19 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteResume(int resumeIndex) {
-        deleteResumeByIndex(resumeIndex);
+    protected void deleteResume(Object searchKey) {
+        deleteResumeByIndex((Integer) searchKey);
         storage[--size] = null;
     }
 
     @Override
-    protected Resume getResume(int index) {
-        return storage[index];
+    protected Resume getResume(Object searchKey) {
+        return storage[(int) searchKey];
     }
 
     @Override
-    protected void updateResume(Resume resume, int resumeIndex) {
-        storage[resumeIndex] = resume;
+    protected void updateResume(Resume resume, Object searchKey) {
+        storage[(int) searchKey] = resume;
     }
-
-    protected abstract void addNewResume(Resume resume);
-
-    protected abstract void deleteResumeByIndex(int resumeIndex);
 }
 

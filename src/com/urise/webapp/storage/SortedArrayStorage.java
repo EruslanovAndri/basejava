@@ -5,14 +5,8 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
-    protected int findResume(String uuid) {
-        Resume searchResume = new Resume(uuid);
-        return Arrays.binarySearch(storage, 0, size, searchResume);
-    }
-
-    @Override
     protected void addNewResume(Resume resume) {
-        int resumePosition = findResume(resume.getUuid());
+        int resumePosition = (int) findSearchKey(resume.getUuid());
         resumePosition = -resumePosition - 1;
         System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
         storage[resumePosition] = resume;
@@ -21,5 +15,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     protected void deleteResumeByIndex(int resumeIndex) {
         System.arraycopy(storage, resumeIndex + 1, storage, resumeIndex, size - resumeIndex - 1);
+    }
+
+    @Override
+    protected Object findSearchKey(String uuid) {
+        Resume searchResume = new Resume(uuid);
+        return Arrays.binarySearch(storage, 0, size, searchResume);
     }
 }

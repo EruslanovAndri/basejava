@@ -5,53 +5,56 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
+
+    protected abstract void deleteResume(Object searchKey);
+
+    protected abstract Resume getResume(Object searchKey);
+
+    protected abstract void saveResume(Resume resume);
+
+    protected abstract void updateResume(Resume resume, Object searchKey);
+
+    protected abstract Object findSearchKey(String uuid);
+
     @Override
     public final void delete(String uuid) {
-        int resumePosition = findResume(uuid);
-        validateExistResume(resumePosition, uuid);
-        deleteResume(resumePosition);
+        var searchKey = findExistedSearchKey(uuid);
+        deleteResume(searchKey);
     }
 
     @Override
     public final Resume get(String uuid) {
-        int resumePosition = findResume(uuid);
-        validateExistResume(resumePosition, uuid);
-        return getResume(resumePosition);
+        var searchKey = findExistedSearchKey(uuid);
+        return getResume(searchKey);
     }
 
     @Override
     public final void save(Resume resume) {
-        int resumePosition = findResume(resume.getUuid());
-        checkExistResume(resume, resumePosition);
+        findNotExistedSearchKey(resume);
         saveResume(resume);
     }
 
     @Override
     public final void update(Resume resume) {
-        int resumePosition = findResume(resume.getUuid());
-        validateExistResume(resumePosition, resume.getUuid());
-        updateResume(resume, resumePosition);
+        var searchKey = findExistedSearchKey(resume.getUuid());
+        updateResume(resume, searchKey);
     }
 
-    protected abstract void deleteResume(int resumePosition);
-
-    protected abstract Resume getResume(int resumePosition);
-
-    protected abstract void saveResume(Resume resume);
-
-    protected abstract void updateResume(Resume resume, int resumePosition);
-
-    protected abstract int findResume(String uuid);
-
-    private void checkExistResume(Resume resume, int resumePosition) {
-        if (resumePosition >= 0) {
+    private boolean findNotExistedSearchKey(Resume resume) {
+        var searchKey = findSearchKey(resume.getUuid());
+        if ((searchKey instanceof Integer) && ((Integer) searchKey >= 0) ||
+                (searchKey instanceof String) && (searchKey != null)) {
             throw new ExistStorageException(resume.getUuid());
         }
+        return true;
     }
 
-    private void validateExistResume(int resumePosition, String uuid) {
-        if (resumePosition < 0) {
+
+    private Object findExistedSearchKey(String uuid) {
+        var searchKey = findSearchKey(uuid);
+        if ((searchKey instanceof Integer) && ((Integer) searchKey < 0) || searchKey == null) {
             throw new NotExistStorageException(uuid);
         }
+        return searchKey;
     }
 }
