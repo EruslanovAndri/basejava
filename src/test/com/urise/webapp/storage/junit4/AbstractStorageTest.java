@@ -4,13 +4,13 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.Storage;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.Arrays;
 
 public abstract class AbstractStorageTest {
@@ -69,7 +69,6 @@ public abstract class AbstractStorageTest {
     public void getNotExistTest() {
         storage.get(UUID_4);
     }
-
 
     @Test
     public void getAllTest() {

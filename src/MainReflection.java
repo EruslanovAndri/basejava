@@ -1,5 +1,4 @@
 import com.urise.webapp.model.Resume;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -7,7 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MainReflection {
-    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException,
+            InvocationTargetException, IllegalAccessException {
         Resume resume = new Resume();
         String className = getClassName(resume);
         invokeClassMethod(className, "toString", resume);
@@ -18,7 +18,7 @@ public class MainReflection {
 
     public static String getClassName(Object object) {
         Class clazz = object.getClass();
-        Constructor<String>[] constructor =  clazz.getConstructors();
+        Constructor<String>[] constructor = clazz.getConstructors();
         for (Constructor<String> c : constructor) {
             System.out.println(c);
         }
@@ -52,7 +52,9 @@ public class MainReflection {
         }
     }
 
-    public static void invokeClassMethod(String className, String methodName, Object object) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void invokeClassMethod(String className, String methodName, Object object)
+            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+            IllegalAccessException {
         Method method = Class.forName(className).getMethod(methodName, null);
         method.invoke(object, null);
         System.out.println("Вызов метода через Reflection : " + object);

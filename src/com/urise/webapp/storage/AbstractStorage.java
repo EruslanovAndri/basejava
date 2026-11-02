@@ -5,7 +5,6 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-
     protected abstract void deleteResume(Object searchKey);
 
     protected abstract Resume getResume(Object searchKey);
@@ -48,7 +47,6 @@ public abstract class AbstractStorage implements Storage {
         }
         return true;
     }
-
 
     private Object findExistedSearchKey(String uuid) {
         var searchKey = findSearchKey(uuid);
