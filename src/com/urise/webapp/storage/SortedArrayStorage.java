@@ -4,13 +4,12 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
+
     @Override
-    protected void addNewResume(Resume resume) {
-        int resumePosition = (int) findSearchKey(resume.getUuid());
-        resumePosition = -resumePosition - 1;
-        System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
-        System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
-        storage[resumePosition] = resume;
+    protected void addNewResume(Resume resume, int index) {
+        index = -index - 1;
+        System.arraycopy(storage, index, storage, index + 1, size - index);
+        storage[index] = resume;
     }
 
     @Override
@@ -20,6 +19,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Object findSearchKey(String uuid) {
+        System.out.println("Find SortedArrayStorage");
         Resume searchResume = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchResume);
     }
