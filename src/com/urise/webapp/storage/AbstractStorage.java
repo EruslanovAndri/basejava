@@ -5,13 +5,13 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected abstract void deleteResume(Object searchKey);
+    protected abstract void doDelete(Object searchKey);
 
-    protected abstract Resume getResume(Object searchKey);
+    protected abstract Resume doGet(Object searchKey);
 
-    protected abstract void saveResume(Resume resume, Object searchKey);
+    protected abstract void doSave(Resume resume, Object searchKey);
 
-    protected abstract void updateResume(Resume resume, Object searchKey);
+    protected abstract void doUpdate(Resume resume, Object searchKey);
 
     protected abstract Object findSearchKey(String uuid);
 
@@ -22,25 +22,25 @@ public abstract class AbstractStorage implements Storage {
     @Override
     public final void delete(String uuid) {
         var searchKey = findExistedSearchKey(uuid);
-        deleteResume(searchKey);
+        doDelete(searchKey);
     }
 
     @Override
     public final Resume get(String uuid) {
         var searchKey = findExistedSearchKey(uuid);
-        return getResume(searchKey);
+        return doGet(searchKey);
     }
 
     @Override
     public final void save(Resume resume) {
         var searchKey = findNotExistedSearchKey(resume);
-        saveResume(resume, searchKey);
+        doSave(resume, searchKey);
     }
 
     @Override
     public final void update(Resume resume) {
         var searchKey = findExistedSearchKey(resume.getUuid());
-        updateResume(resume, searchKey);
+        doUpdate(resume, searchKey);
     }
 
     private Object findNotExistedSearchKey(Resume resume) {
