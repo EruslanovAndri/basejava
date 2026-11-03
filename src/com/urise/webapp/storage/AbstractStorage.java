@@ -17,8 +17,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract boolean isExist(Object searchKey);
 
-    protected abstract boolean isNotExist(Object searchKey);
-
     @Override
     public final void delete(String uuid) {
         var searchKey = findExistedSearchKey(uuid);
