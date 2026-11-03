@@ -15,6 +15,10 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object findSearchKey(String uuid);
 
+    protected abstract boolean isExist(Object searchKey);
+
+    protected abstract boolean isNotExist(Object searchKey);
+
     @Override
     public final void delete(String uuid) {
         var searchKey = findExistedSearchKey(uuid);
@@ -41,8 +45,7 @@ public abstract class AbstractStorage implements Storage {
 
     private boolean findNotExistedSearchKey(Resume resume) {
         var searchKey = findSearchKey(resume.getUuid());
-        if ((searchKey instanceof Integer) && ((Integer) searchKey >= 0) ||
-                (searchKey instanceof String) && (searchKey != null)) {
+        if (isExist(searchKey)) {
             throw new ExistStorageException(resume.getUuid());
         }
         return true;
@@ -50,7 +53,7 @@ public abstract class AbstractStorage implements Storage {
 
     private Object findExistedSearchKey(String uuid) {
         var searchKey = findSearchKey(uuid);
-        if ((searchKey instanceof Integer) && ((Integer) searchKey < 0) || searchKey == null) {
+        if (isNotExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;

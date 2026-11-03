@@ -9,6 +9,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         int resumePosition = (int) findSearchKey(resume.getUuid());
         resumePosition = -resumePosition - 1;
         System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
+        System.arraycopy(storage, resumePosition, storage, resumePosition + 1, size - resumePosition);
         storage[resumePosition] = resume;
     }
 

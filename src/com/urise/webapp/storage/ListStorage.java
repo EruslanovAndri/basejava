@@ -50,4 +50,14 @@ public class ListStorage extends AbstractStorage {
                 .findFirst()
                 .orElse(-1);
     }
+
+    @Override
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
+    }
+
+    @Override
+    protected boolean isNotExist(Object searchKey) {
+        return (Integer) searchKey < 0;
+    }
 }
