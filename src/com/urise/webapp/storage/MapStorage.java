@@ -1,7 +1,10 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage {
@@ -15,6 +18,11 @@ public class MapStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         return storage.values().toArray(Resume[]::new);
+    }
+
+    @Override
+    protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
+        return storage.values().stream().sorted(comparator).toList();
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
-    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
+    private static final Comparator<Resume> RESUME_COMPARATOR =
+            Comparator.comparing(Resume::getUuid);
 
     @Override
     protected void addNewResume(Resume resume, int index) {
