@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 public class MainReflection {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException, IllegalAccessException {
-        Resume resume = new Resume();
+        Resume resume = new Resume("Eruslanov Andrey");
         String className = getClassName(resume);
         invokeClassMethod(className, "toString", resume);
         showClassFields(resume);
