@@ -11,6 +11,10 @@ public class Resume {
     private final String uuid;
     private String fullName;
 
+    public Resume() {
+        this(UUID.randomUUID().toString(), null);
+    }
+
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
     }
@@ -33,16 +37,16 @@ public class Resume {
         if (null == o || this.getClass() != o.getClass()) return false;
 
         final Resume resume = (Resume) o;
-        return this.uuid.equals(resume.uuid) && Objects.equals(this.fullName, resume.fullName);
+        return Objects.equals(uuid, resume.uuid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
+        return Objects.hash(uuid);
     }
 
     @Override
     public String toString() {
-        return uuid + " " + fullName;
+        return "UUID: " + uuid + " " + "Name: " + fullName;
     }
 }

@@ -37,7 +37,6 @@ public abstract class AbstractStorage implements Storage {
         return doGet(searchKey);
     }
 
-
     @Override
     public List<Resume> getAllSorted() {
         final Comparator<Resume> compareByName = (o1, o2) -> {

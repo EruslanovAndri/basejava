@@ -4,7 +4,6 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
@@ -20,10 +19,16 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "UUID_3";
     private static final String UUID_4 = "UUID_4";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final String NAME_1 = "NAME_1";
+    private static final String NAME_2 = "NAME_2";
+    private static final String NAME_3 = "NAME_3";
+    private static final String NAME_4 = "NAME_4";
+
+
+    private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
+    private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
+    private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
+    private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
 
     protected AbstractStorageTest(final Storage storage) {
         this.storage = storage;
@@ -52,7 +57,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getTest() {
-        Resume resume = new Resume(UUID_1);
+        Resume resume = new Resume(UUID_1, NAME_1);
         assertEquals(resume, storage.get(UUID_1));
     }
 
@@ -68,12 +73,12 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAllTest() {
+    public void getAllSortedTest() {
         Resume[] resumes = new Resume[3];
         resumes[0] = RESUME_1;
         resumes[1] = RESUME_2;
         resumes[2] = RESUME_3;
-        assertArrayEquals(resumes, storage.getAll());
+        assertArrayEquals(resumes, storage.getAllSorted().toArray());
     }
 
     @Test
@@ -95,7 +100,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void updateTest() {
-        Resume resume = new Resume(UUID_1);
+        Resume resume = new Resume(UUID_1, NAME_1);
         storage.update(resume);
         assertSame(resume, storage.get(UUID_1));
     }

@@ -1,9 +1,8 @@
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.MapStorage;
+import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.Storage;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,10 +14,11 @@ import java.util.List;
  */
 
 public class MainArray {
-//        private static final Storage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage ARRAY_STORAGE = new ArrayStorage();
 //        private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 //    private static final Storage ARRAY_STORAGE = new ListStorage();
-    private static final Storage ARRAY_STORAGE = new MapStorage();
+//    private static final Storage ARRAY_STORAGE = new MapUuidStorage();
+//    private static final Storage ARRAY_STORAGE = new MapResumeStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -43,7 +43,9 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    resume = new Resume(uuid);
+                    System.out.print("Напишите имя: ");
+                    String fullName = reader.readLine().intern().trim();
+                    resume = new Resume(uuid, fullName);
                     try {
                         ARRAY_STORAGE.save(resume);
                         printAll();
@@ -67,7 +69,9 @@ public class MainArray {
                     }
                     break;
                 case "update":
-                    resume = new Resume(uuid);
+                    System.out.print("Напишите новое имя: ");
+                    String newFullName = reader.readLine().intern().trim();
+                    resume = new Resume(uuid, newFullName);
                     try {
                         ARRAY_STORAGE.update(resume);
                         printAll();
@@ -87,19 +91,6 @@ public class MainArray {
             }
         }
     }
-
-//    static void printAll() {
-//        Resume[] all = ARRAY_STORAGE.getAll();
-//        System.out.println("----------------------------");
-//        if (all.length == 0) {
-//            System.out.println("Empty");
-//        } else {
-//            for (Resume resume : all) {
-//                System.out.println(resume);
-//            }
-//        }
-//        System.out.println("----------------------------");
-//    }
 
     static void printAll() {
         List<Resume> all = ARRAY_STORAGE.getAllSorted();

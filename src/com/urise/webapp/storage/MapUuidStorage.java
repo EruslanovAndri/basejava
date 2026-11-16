@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
     protected final Map<String, Resume> storage = new LinkedHashMap<>();
 
     @Override
@@ -15,10 +15,10 @@ public class MapStorage extends AbstractStorage {
         storage.clear();
     }
 
-    @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(Resume[]::new);
-    }
+//    @Override
+//    public Resume[] getAll() {
+//        return storage.values().toArray(Resume[]::new);
+//    }
 
     @Override
     protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
