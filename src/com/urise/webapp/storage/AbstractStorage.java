@@ -15,6 +15,8 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume doGet(Object searchKey);
 
+    protected abstract List<Resume> doGetAllSorted(Comparator<Resume> comparator);
+
     protected abstract void doSave(Resume resume, Object searchKey);
 
     protected abstract void doUpdate(Resume resume, Object searchKey);
@@ -22,8 +24,6 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Object findSearchKey(String uuid);
 
     protected abstract boolean isExist(Object searchKey);
-
-    protected abstract List<Resume> doGetAllSorted(Comparator<Resume> comparator);
 
     @Override
     public final void delete(String uuid) {
