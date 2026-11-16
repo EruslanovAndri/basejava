@@ -10,6 +10,21 @@ public class MapResumeStorage extends AbstractStorage {
     protected final Map<Resume, Resume> storage = new HashMap<>();
 
     @Override
+    public void clear() {
+        storage.clear();
+    }
+
+    @Override
+    protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
+        return storage.values().stream().sorted(comparator).toList();
+    }
+
+    @Override
+    public int size() {
+        return storage.size();
+    }
+
+    @Override
     protected void doDelete(Object searchKey) {
         storage.remove(searchKey);
     }
@@ -37,20 +52,5 @@ public class MapResumeStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object searchKey) {
         return storage.containsKey(searchKey);
-    }
-
-    @Override
-    protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
-        return storage.values().stream().sorted(comparator).toList();
-    }
-
-    @Override
-    public void clear() {
-        storage.clear();
-    }
-
-    @Override
-    public int size() {
-        return storage.size();
     }
 }
