@@ -39,14 +39,6 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        final Comparator<Resume> compareByName = (o1, o2) -> {
-            int result = o1.getFullName().compareTo(o2.getFullName());
-            if (result != 0) {
-                return result;
-            } else {
-                return o1.getUuid().compareTo(o2.getUuid());
-            }
-        };
         return doGetAllSorted(COMPARATOR);
     }
 

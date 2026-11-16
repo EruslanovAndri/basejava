@@ -23,11 +23,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-//    @Override
-//    public final Resume[] getAll() {
-//        return Arrays.copyOf(storage, size);
-//    }
-
     @Override
     protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
         final Resume[] resumes = Arrays.copyOf(storage, size);

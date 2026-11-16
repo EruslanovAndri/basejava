@@ -15,11 +15,6 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-//    @Override
-//    public Resume[] getAll() {
-//        return List.copyOf(storage).toArray(Resume[]::new);
-//    }
-
     @Override
     protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
         storage.sort(comparator);
