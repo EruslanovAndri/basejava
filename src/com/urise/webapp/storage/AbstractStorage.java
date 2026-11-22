@@ -8,33 +8,33 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
     private static final Comparator<Resume> COMPARATOR =
             Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
 
-    protected abstract void doDelete(Object searchKey);
+    protected abstract void doDelete(SK searchKey);
 
-    protected abstract Resume doGet(Object searchKey);
+    protected abstract Resume doGet(SK searchKey);
 
     protected abstract Resume[] doGetAllSorted();
 
-    protected abstract void doSave(Resume resume, Object searchKey);
+    protected abstract void doSave(Resume resume, SK searchKey);
 
-    protected abstract void doUpdate(Resume resume, Object searchKey);
+    protected abstract void doUpdate(Resume resume, SK searchKey);
 
-    protected abstract Object findSearchKey(String uuid);
+    protected abstract SK findSearchKey(String uuid);
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract boolean isExist(SK searchKey);
 
     @Override
     public final void delete(String uuid) {
-        var searchKey = findExistedSearchKey(uuid);
+        SK searchKey = findExistedSearchKey(uuid);
         doDelete(searchKey);
     }
 
     @Override
     public final Resume get(String uuid) {
-        var searchKey = findExistedSearchKey(uuid);
+        SK searchKey = findExistedSearchKey(uuid);
         return doGet(searchKey);
     }
 
@@ -48,26 +48,26 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public final void save(Resume resume) {
-        var searchKey = findNotExistedSearchKey(resume);
+        SK searchKey = findNotExistedSearchKey(resume);
         doSave(resume, searchKey);
     }
 
     @Override
     public final void update(Resume resume) {
-        var searchKey = findExistedSearchKey(resume.getUuid());
+        SK searchKey = findExistedSearchKey(resume.getUuid());
         doUpdate(resume, searchKey);
     }
 
-    private Object findNotExistedSearchKey(Resume resume) {
-        var searchKey = findSearchKey(resume.getUuid());
+    private SK findNotExistedSearchKey(Resume resume) {
+        SK searchKey = findSearchKey(resume.getUuid());
         if (isExist(searchKey)) {
             throw new ExistStorageException(resume.getUuid());
         }
         return searchKey;
     }
 
-    private Object findExistedSearchKey(String uuid) {
-        var searchKey = findSearchKey(uuid);
+    private SK findExistedSearchKey(String uuid) {
+        SK searchKey = findSearchKey(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
