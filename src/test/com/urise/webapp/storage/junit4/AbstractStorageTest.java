@@ -1,15 +1,16 @@
 package test.com.urise.webapp.storage.junit4;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.Storage;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -63,7 +64,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getTest() {
-        Resume resume = new Resume(UUID_1, NAME_1);
+        Resume resume = RESUME_1;
         assertEquals(resume, storage.get(UUID_1));
     }
 
@@ -74,19 +75,19 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSortedTest() {
-        Resume[] resumes = new Resume[3];
-        assertTrue(resumes.length == storage.size());
-        resumes[0] = RESUME_1;
-        resumes[1] = RESUME_2;
-        resumes[2] = RESUME_3;
-        assertArrayEquals(resumes, storage.getAllSorted().toArray());
+        List<Resume> resumes = new ArrayList<>();
+        assertEquals(3,storage.size());
+        resumes.add(RESUME_1);
+        resumes.add(RESUME_2);
+        resumes.add(RESUME_3);
+        assertEquals(resumes, storage.getAllSorted());
     }
 
     @Test
     public void saveTest() {
         storage.save(RESUME_4);
         assertEquals(4, storage.size());
-        Resume resume = new Resume(UUID_4, NAME_4);
+        Resume resume = RESUME_4;
         assertEquals(resume, storage.get(UUID_4));
     }
 
