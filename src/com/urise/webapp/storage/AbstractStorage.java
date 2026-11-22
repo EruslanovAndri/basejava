@@ -3,7 +3,8 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume doGet(Object searchKey);
 
-    protected abstract List<Resume> doGetAllSorted(Comparator<Resume> comparator);
+    protected abstract Resume[] doGetAllSorted();
 
     protected abstract void doSave(Resume resume, Object searchKey);
 
@@ -39,7 +40,10 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return doGetAllSorted(COMPARATOR);
+        Resume[] resumes = doGetAllSorted();
+        List<Resume> list = new ArrayList<>(Arrays.asList(resumes));
+        list.sort(COMPARATOR);
+        return list;
     }
 
     @Override

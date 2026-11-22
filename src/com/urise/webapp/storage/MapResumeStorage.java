@@ -1,9 +1,8 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-import java.util.Comparator;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MapResumeStorage extends AbstractStorage {
@@ -15,8 +14,8 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected List<Resume> doGetAllSorted(Comparator<Resume> comparator) {
-        return storage.values().stream().sorted(comparator).toList();
+    protected Resume[] doGetAllSorted() {
+        return storage.values().stream().toArray(Resume[]::new);
     }
 
     @Override

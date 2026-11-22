@@ -1,8 +1,9 @@
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ArrayStorage;
+import com.urise.webapp.storage.ListStorage;
 import com.urise.webapp.storage.Storage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,9 +15,9 @@ import java.util.List;
  */
 
 public class MainArray {
-    private static final Storage ARRAY_STORAGE = new ArrayStorage();
+//    private static final Storage ARRAY_STORAGE = new ArrayStorage();
 //        private static final Storage ARRAY_STORAGE = new SortedArrayStorage();
-//    private static final Storage ARRAY_STORAGE = new ListStorage();
+    private static final Storage ARRAY_STORAGE = new ListStorage();
 //    private static final Storage ARRAY_STORAGE = new MapUuidStorage();
 //    private static final Storage ARRAY_STORAGE = new MapResumeStorage();
 
