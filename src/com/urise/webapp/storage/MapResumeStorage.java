@@ -45,7 +45,7 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected Object findSearchKey(String uuid) {
-        return new Resume(uuid, null);
+        return new Resume(uuid, "dummy");
     }
 
     @Override

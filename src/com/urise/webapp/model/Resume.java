@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Resume {
     // Unique identifier
     private final String uuid;
-    private String fullName;
+    private final String fullName;
 
     public Resume() {
         this(UUID.randomUUID().toString(), null);
@@ -20,6 +20,8 @@ public class Resume {
     }
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "Uuid не может быть null");
+        Objects.requireNonNull(fullName, "Full name не может быть null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
